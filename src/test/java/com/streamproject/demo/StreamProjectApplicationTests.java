@@ -296,6 +296,16 @@ class StreamProjectApplicationTests {
         System.out.println("평균값 : "+total.getAverage());
 
 
+        // 문자열 연결
+        String tongStr = transactions2.stream().map(Transaction2::getTong).collect(Collectors.joining(", "));
+        System.out.println(tongStr);
+
+
+        List<String> testList = Arrays.asList("tsss1", "tsss2", "tsss3", "tsss4", "tsss5");
+        String strList = testList.stream().map(String::toString).collect(Collectors.joining(", "));
+        System.out.println(strList);
+
+
     }
 
 
