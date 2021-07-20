@@ -306,6 +306,41 @@ class StreamProjectApplicationTests {
         System.out.println(strList);
 
 
+        // 합계?
+        int totalVal = transactions2.stream().map(Transaction2::getVal).reduce(Integer::sum).get();
+        int totalVal2 = transactions2.stream().mapToInt(Transaction2::getVal).sum();
+
+
+        System.out.println(totalVal);
+        System.out.println(totalVal2);
+
+        int krwSum = transactions2.stream()
+                                    .filter((i)-> i.getTong().equals("KRW"))
+                                    .mapToInt(Transaction2::getVal).sum();
+
+        int usSum = transactions2.stream()
+                .filter((i)-> i.getTong().equals("US"))
+                .mapToInt(Transaction2::getVal).sum();
+
+
+        System.out.println(krwSum);
+        System.out.println(usSum);
+
+
+        // val 합계, 최소, 최대, 평균값 구하기
+        IntSummaryStatistics krwMap = transactions2.stream()
+                .filter((i)-> i.getTong().equals("KRW"))
+                .collect(Collectors.summarizingInt(Transaction2::getVal));
+
+        IntSummaryStatistics usMap = transactions2.stream()
+                .filter((i)-> i.getTong().equals("US"))
+                .collect(Collectors.summarizingInt(Transaction2::getVal));
+
+
+        System.out.println(krwMap);
+        System.out.println(usMap);
+
+
     }
 
 
