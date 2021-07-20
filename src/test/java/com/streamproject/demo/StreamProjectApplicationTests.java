@@ -337,8 +337,14 @@ class StreamProjectApplicationTests {
                 .collect(Collectors.summarizingInt(Transaction2::getVal));
 
 
+
+        IntSummaryStatistics nulMap = transactions2.stream()
+                .filter((i)-> i.getTong().equals("SKW"))
+                .collect(Collectors.summarizingInt(Transaction2::getVal));
+
         System.out.println(krwMap);
         System.out.println(usMap);
+        System.out.println(nulMap);
 
 
     }
