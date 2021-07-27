@@ -1,16 +1,16 @@
 package com.streamproject.demo;
 
 import com.streamproject.demo.model.*;
+import org.apache.tomcat.util.buf.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -347,19 +347,121 @@ class StreamProjectApplicationTests {
         System.out.println(nulMap);
 
 
+
+        // 통화별로 그룹화 하고 카운팅
+        Map<String, Long> tongCount =
+                transactions2.stream()
+                        .collect(Collectors.groupingBy(Transaction2::getTong, Collectors.counting()));
+
+
+        System.out.println(tongCount.get("US"));
+        System.out.println(tongCount.get("KRW"))
+
+
+        ;
+
+//        criteria.orOperator(Criteria.where("company.ceoName").regex(ceoName), Criteria.where("personal.name").regex(ceoName));
+
+
+
+
+
+
+
+
+
+
+    }
+
+
+
+    @Test
+    public void lamdaTest()
+    {
+
+        List<Integer> num = Arrays.asList(3, 5, 1,2,6);
+        num.sort(Comparator.naturalOrder());
+        System.out.println(num);
+
+
+        List<String> str = Arrays.asList("a", "B", "A","d","T");
+        str.sort(Comparator.naturalOrder());
+        System.out.println(str);
+
+
+
+
+
+        List<Transaction2> transactions2 = Arrays.asList(
+                new Transaction2("KRW", 500),
+                new Transaction2("KRW", 400),
+                new Transaction2("KRW", 500),
+                new Transaction2("KRW", 600),
+                new Transaction2("KRW", 700),
+                new Transaction2("US", 710),
+                new Transaction2("US", 720),
+                new Transaction2("US", 730),
+                new Transaction2("US", 740)
+        );
+
+        List<Transaction2> t = transactions2.stream().sorted(Comparator.comparing(Transaction2::getVal)).collect(Collectors.toList());
+
+        t.forEach((i)-> System.out.println(i.getVal()));
+
+
+
+
+
+
+
+
     }
 
 
 
 
+    @Test
+    public void OptionsTest(){
+        OptionsClass cc = new OptionsClass();
+
+//        String s = Optional.ofNullable(cc.getAddr()).orElseGet(() -> "test");
+
+        try {
+            NullPointerException ex = new NullPointerException();
+        }catch (Exception e){
+            System.out.println(e);
+        }/*finally {
+            cc.setAddr("마지막");
+        }*/
+
+        System.out.println(cc.getAddr());
+
+
+        List<String> testList = Arrays.asList("tsss1", "tsss2", "tsss3", "tsss4", "tsss5");
+        String strList = testList.stream().map(String::toString).collect(Collectors.joining(", "));
+        System.out.println(strList);
 
 
 
+        Optional<OptionsClass> opt = Optional.ofNullable(cc);
+        Optional<String> testsss = opt.map(OptionsClass::getAddr);
+        System.out.println(testsss);
+
+    }
 
 
+    @Test
+    public void stringMany(){
+        List<String> testList = Arrays.asList("tsss1", "tsss2", "tsss3", "tsss4", "tsss5");
+        String strList = testList.stream().map(String::toString).collect(Collectors.joining(", "));
+        System.out.println(strList);
 
 
+        String strList2  = StringUtils.join(testList, ',');
 
+        System.out.println(strList2);
+
+    }
 
 
 
