@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.comparator.Comparators;
 
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -421,28 +422,47 @@ public class SvTest
 
 
 
-//        for (int i=0; i<lotosList.size(); i++){
-//            System.out.println(Arrays.toString(rankTest(lotosList.get(i), winList.get(i))));
-//        }
+        for (int i=0; i<lotosList.size(); i++){
+            System.out.println(Arrays.toString(rankTest(lotosList.get(i), winList.get(i))));
+        }
 
     }
 
 
     public int[] rankTest(int[] lottos, int[] win_nums){
-
-        /**
-         * 7 -
-         */
-
-        int[] finalLank =LongStream.of(
+        return LongStream.of(
                 (lottos.length + 1) - Arrays.stream(lottos).filter(l -> Arrays.stream(win_nums).anyMatch(w -> w == l) || l == 0).count(),
                 (lottos.length + 1) - Arrays.stream(lottos).filter(l -> Arrays.stream(win_nums).anyMatch(w -> w == l)).count()
         ).mapToInt(op -> (int) (op > 6 ? op - 1 : op)).toArray();
+    }
 
 
 
+    @Test
+    public void khTest(){
+        long beforeTime = System.currentTimeMillis();
+        Integer sum5 = IntStream.range(1, 5000000).parallel().reduce(10, Integer::sum);
+//        Integer sum4 = numbers4.parallel().reduce(10, Integer::sum);
+//        System.out.println("sum4: " + sum4);
+        System.out.println(sum5);
 
-        return finalLank;
+        long afterTime = System.currentTimeMillis();
+        long secDiffTime = (afterTime - beforeTime)/1000;
+        System.out.println("시간차이(m) : "+secDiffTime);
+
+    }
+
+
+    @Test
+    public void bsssTest(){
+
+        long beforeTime = System.currentTimeMillis();
+        Integer sum6 = IntStream.range(1, 5000000).sum();
+        System.out.println(sum6);
+
+        long afterTime = System.currentTimeMillis();
+        long secDiffTime = (afterTime - beforeTime)/1000;
+        System.out.println("시간차이(m) : "+secDiffTime);
     }
 
 }
