@@ -68,24 +68,7 @@ public class StreamTest2
 
 
 
-        Stream<String> str5 = Stream.of("Java8", "Python3", "GoLang");
-
-
-        String collect1 = str5.map(String::toUpperCase).collect(Collectors.joining(", "));
-
-        System.out.println(collect1);
-
-
-        List<String> str6 = Arrays.asList("Java8", "Python3", "GoLang");
-
-        Optional<String> first = str6.stream().findFirst();
-
-        first.ifPresent(System.out::println);
-
-
     }
-
-
 
 
 
