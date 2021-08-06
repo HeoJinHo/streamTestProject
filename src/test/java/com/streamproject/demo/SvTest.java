@@ -431,8 +431,8 @@ public class SvTest
 
     public int[] rankTest(int[] lottos, int[] win_nums){
         return LongStream.of(
-                (lottos.length + 1) - Arrays.stream(lottos).filter(l -> Arrays.stream(win_nums).anyMatch(w -> w == l) || l == 0).count(),
-                (lottos.length + 1) - Arrays.stream(lottos).filter(l -> Arrays.stream(win_nums).anyMatch(w -> w == l)).count()
+                (lottos.length + 1) - Arrays.stream(lottos).filter(l -> Arrays.stream(win_nums).anyMatch(w -> w == l) || l == 0).count(), //다 맞았을경우 count
+                (lottos.length + 1) - Arrays.stream(lottos).filter(l -> Arrays.stream(win_nums).anyMatch(w -> w == l)).count()  //다 틀린경우 count
         ).mapToInt(op -> (int) (op > 6 ? op - 1 : op)).toArray();
     }
 
@@ -445,6 +445,8 @@ public class SvTest
 //        Integer sum4 = numbers4.parallel().reduce(10, Integer::sum);
 //        System.out.println("sum4: " + sum4);
         System.out.println(sum5);
+
+
 
         long afterTime = System.currentTimeMillis();
         long secDiffTime = (afterTime - beforeTime)/1000;
